@@ -1,5 +1,5 @@
 function TennisGame(){
-  const scoreString = ['Love', 'Fifteen', 'Thirty', 'Forthy']
+  const scoreString = ['Love', 'Fifteen', 'Thirthy', 'Forthy']
 
   this.reset = () => {
     playerA = 0, playerB = 0;
@@ -19,11 +19,11 @@ function TennisGame(){
     let str = ""
     if(playerA == 3 && playerB == 3) str = "Deuce"
     else if (playerA == 4 && playerB == 3 || playerA == 3 && playerB == 4){
-      if(playerA == 4) str = "PlayerA advantage"
-      else str = "PlayerB advantage"
+      if(playerA == 4) str = "Player A advantage"
+      else str = "Player B advantage"
     }
-    else if (playerA == 4 || playerA == 5) str = "PlayerA win"
-    else if (playerB == 4 || playerB == 5)  str = "PlayerB win"
+    else if (playerA == 4 || playerA == 5) str = "Player A wins game"
+    else if (playerB == 4 || playerB == 5)  str = "Player B wins game"
     else str = scoreString[playerA] + " - " + scoreString[playerB]
 
     return str

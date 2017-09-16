@@ -1,104 +1,90 @@
+const TennisApp = require('./tennis.js')
 
-const TennisGame = require('./tennis.js');
-
-describe('echo()', function() {
+describe('Tenis App', () => {
   let app
   beforeEach(() => {
-    //Arrange
-    app = new TennisGame()
-    //Act
+    app = new TennisApp()
     app.reset()
   })
 
-  it('should return "Love - Love" when game start.', () => {
-        //Act
-        let result = app.echo()
-        //Assert
-        expect(result).toBe('Love - Love')
-      })
+  function repeatPlayerGetScore(player, number){
+    for(i = 0; i < number; i++){
+      if(player == 'A') app.playerGetScore('A')
+      else app.playerGetScore('B')
+    }
+  }
 
-  it('should return "Fifteen - Love" when playerA get first point.', () => {
-        //Act
-        app.playerGetScore('A')
-        let result = app.echo()
-        //Assert
-        expect(result).toBe('Fifteen - Love')
-      })
+  describe('Player A gets score', () => {
 
-  it('should return "Love - Fifteen" when playerB get first point.', () => {
-        //Act
-        app.playerGetScore('B')
-        let result = app.echo()
-        //Assert
-        expect(result).toBe('Love - Fifteen')
-      })
+    it('should echo "Love - Love" when game starts', () => {
+      let result = app.echo()
 
-  it('should return "Thirty - Fifteen" when score is 30 - 15.', () => {
-        //Act
-        app.playerGetScore('A')
-        app.playerGetScore('A')
-        app.playerGetScore('B')
-        let result = app.echo()
-        //Assert
-        expect(result).toBe('Thirty - Fifteen')
+      expect(result).toBe('Love - Love')
+    })
+
+    it('should echo "Fifteen - Love" when score is 15 - 0', () => {
+      repeatPlayerGetScore('A', 1)
+      let result = app.echo()
+
+      expect(result).toBe('Fifteen - Love')
+    })
+
+    it('should echo "Thirthy - Love" when score is 30-0', () => {
+      repeatPlayerGetScore('A', 2)
+      let result = app.echo()
+
+      expect(result).toBe('Thirthy - Love')
+    })
+
+    it('should echo "Forthy - Love" when score is 40-0', () => {
+      repeatPlayerGetScore('A', 3)
+      let result = app.echo()
+
+      expect(result).toBe('Forthy - Love')
+    })
+
+    it('should echo "Player A wins game" when player A gets next score at 40-0', () => {
+      repeatPlayerGetScore('A', 4)
+      let result = app.echo()
+
+      expect(result).toBe('Player A wins game')
+    })
   })
 
-  it('should return "Thirty - Thirty" when score is 30 - 30.', () => {
-        //Act
-        for(i = 0; i < 2; i++){
-          app.playerGetScore('A')
-          app.playerGetScore('B')
-        }
-        let result = app.echo()
-        //Assert
-        expect(result).toBe('Thirty - Thirty')
-      })
+  describe('Player B gets score', () => {
 
-  it('should return "Deuce" when score is 40 - 40.', () => {
-        //Act
-        for(i = 0; i < 3; i++){
-          app.playerGetScore('A')
-          app.playerGetScore('B')
-        }
-        let result = app.echo()
-        //Assert
-        expect(result).toBe('Deuce')
-      })
+    it('should echo "Love - Love" when game starts', () => {
+      let result = app.echo()
 
-  it('should return "PlayerB win" when PlayerB get point after score is 0 - 40.', () => {
-        //Act
-        for(i = 0; i < 4; i++)
-        app.playerGetScore('B')
-        let result = app.echo()
-        //Assert
-        expect(result).toBe('PlayerB win')
-      })
+      expect(result).toBe('Love - Love')
+    })
 
-  it('should return "PlayerA advantage" when PlayerA get point after Deuce.', () => {
-        //Act
-        for(i = 0; i < 3; i++){
-          app.playerGetScore('A')
-          app.playerGetScore('B')
-        }
-        app.playerGetScore('A')
-        app.playerGetScore('B')
-        app.playerGetScore('A')
+    it('should echo "Love - Fifteen" when score is 0 - 15', () => {
+      repeatPlayerGetScore('B', 1)
+      let result = app.echo()
 
-        let result = app.echo()
-        //Assert
-        expect(result).toBe('PlayerA advantage')
-      })
+      expect(result).toBe('Love - Fifteen')
+    })
 
-  it('should return "PlayerA win" when PlayerA get point after PlayerA advantage.', () => {
-        //Act
-        for(i = 0; i < 3; i++){
-          app.playerGetScore('A')
-          app.playerGetScore('B')
-        }
-        app.playerGetScore('A')
-        app.playerGetScore('A')
-        let result = app.echo()
-        //Assert
-        expect(result).toBe('PlayerA win')
-      })
+    it('should echo "Love - Thirthy" when score is 0 - 30', () => {
+      repeatPlayerGetScore('B', 2)
+      let result = app.echo()
+
+      expect(result).toBe('Love - Thirthy')
+    })
+
+    it('should echo "Love - Forthy" when score is 0 - 40', () => {
+      repeatPlayerGetScore('B', 3)
+      let result = app.echo()
+
+      expect(result).toBe('Love - Forthy')
+    })
+
+    it('should echo "Player B wins game" when player B gets next score at 40-0', () => {
+      repeatPlayerGetScore('B', 4)
+      let result = app.echo()
+
+      expect(result).toBe('Player B wins game')
+    })
+  })
 })
